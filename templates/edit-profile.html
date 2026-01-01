@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- Page title -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-semibold">Edit profile</h1>
+        <p class="text-sm text-textMuted mt-1">
+            Update your personal information and profile settings
+        </p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-8">
+        {% csrf_token %}
+
+        <!-- Profile Picture -->
+        <div class="bg-cardDark border border-borderDark rounded-md p-6">
+            <h2 class="text-sm font-medium mb-4">Profile photo</h2>
+
+            <div class="flex items-center gap-6">
+                {% if profile_user.picture %}
+                    <img
+                        src="{{ profile_user.picture.url }}"
+                        class="w-20 h-20 rounded-full object-cover border border-borderDark"
+                        alt="profile"
+                    >
+                {% else %}
+                    <div class="w-20 h-20 rounded-full bg-gray-800
+                                flex items-center justify-center text-xl font-medium">
+                        {{ profile_user.username|first|upper }}
+                    </div>
+                {% endif %}
+
+                <div>
+                    {{ form.picture }}
+                    <p class="text-xs text-textMuted mt-1">
+                        JPG or PNG. Max size 2MB.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Basic info -->
+        <div class="bg-cardDark border border-borderDark rounded-md p-6 space-y-5">
+            <h2 class="text-sm font-medium">Basic information</h2>
+
+            <!-- Username -->
+            <div>
+                <label class="block text-xs text-textMuted mb-1">Username</label>
+                {{ form.username }}
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-xs text-textMuted mb-1">Email</label>
+                {{ form.email }}
+            </div>
+
+            <!-- Bio -->
+            <div>
+                <label class="block text-xs text-textMuted mb-1">Bio</label>
+                {{ form.bio }}
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-4">
+            <a
+                href="{% url 'user-profile' profile_user.username %}"
+                class="px-4 py-2 rounded-md
+                       border border-borderDark text-textMuted
+                       hover:bg-gray-800 transition"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="px-5 py-2 rounded-md
+                       bg-primary text-white font-medium
+                       hover:bg-blue-700 transition"
+            >
+                Save changes
+            </button>
+        </div>
+
+    </form>
+
+</main>
+{% endblock %}

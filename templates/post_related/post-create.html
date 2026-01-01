@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodyLife | New Post</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: "#0f172a",
+                        cardDark: "#020617",
+                        borderDark: "#1e293b",
+                        textMuted: "#94a3b8",
+                        primary: "#2563eb"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-bgDark text-white flex items-center justify-center px-4">
+
+<main class="w-full max-w-2xl bg-cardDark border border-borderDark rounded-lg p-8">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-xl font-semibold">Create new post</h1>
+        <p class="text-sm text-textMuted mt-1">
+            Share something useful with the CodyLife community
+        </p>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Body -->
+        <div>
+            <label class="block text-xs text-textMuted mb-1">
+                Post content
+            </label>
+            {{ form.body }}
+            {% if form.body.errors %}
+                <p class="text-xs text-red-400 mt-1">
+                    {{ form.body.errors|striptags }}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Image -->
+        <div>
+            <label class="block text-xs text-textMuted mb-2">
+                Image (optional)
+            </label>
+            {{ form.image }}
+            {% if form.image.errors %}
+                <p class="text-xs text-red-400 mt-1">
+                    {{ form.image.errors|striptags }}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Code -->
+        <div>
+            <label class="block text-xs text-textMuted mb-1">
+                Code (optional)
+            </label>
+            {{ form.code }}
+        </div>
+
+        <!-- Tags -->
+        <div>
+            <label class="block text-xs text-textMuted mb-1">
+                Tags
+            </label>
+            {{ form.tags }}
+            <p class="text-xs text-textMuted mt-1">
+                Separate tags with commas
+            </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-3 pt-4">
+            <a
+                href="{% url 'homepage' %}"
+                class="px-4 py-2 rounded-md
+                       border border-borderDark text-textMuted
+                       hover:bg-gray-800 transition"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="px-5 py-2 rounded-md
+                       bg-primary text-white font-medium
+                       hover:bg-blue-700 transition"
+            >
+                Publish
+            </button>
+        </div>
+
+    </form>
+
+</main>
+
+</body>
+</html>

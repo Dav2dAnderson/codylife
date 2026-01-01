@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete post</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: "#0f172a",
+                        cardDark: "#020617",
+                        borderDark: "#1e293b",
+                        danger: "#dc2626",
+                        textMuted: "#94a3b8"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-bgDark flex items-center justify-center px-4">
+
+    <main class="w-full max-w-md bg-cardDark border border-borderDark rounded-xl p-6 text-center">
+
+        <h1 class="text-xl font-semibold mb-2">
+            Delete post
+        </h1>
+
+        <p class="text-sm text-textMuted mb-4">
+            This action cannot be undone.
+        </p>
+
+        <!-- Post preview -->
+        <div class="bg-bgDark border border-borderDark rounded-md p-3 text-left text-sm mb-6">
+            {{ post.body|truncatechars:120 }}
+        </div>
+
+        <form method="POST" class="space-y-3">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="w-full py-2 rounded-md
+                       bg-danger text-white font-medium
+                       hover:bg-red-700 transition"
+            >
+                Yes, delete post
+            </button>
+
+            <a
+                href="{{ request.META.HTTP_REFERER|default:'/' }}"
+                class="block w-full py-2 rounded-md
+                       border border-borderDark text-textMuted
+                       hover:bg-gray-800 transition"
+            >
+                Cancel
+            </a>
+        </form>
+
+    </main>
+
+</body>
+</html>

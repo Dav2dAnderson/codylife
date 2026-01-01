@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit post</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: "#0f172a",
+                        cardDark: "#020617",
+                        borderDark: "#1e293b",
+                        primary: "#2563eb",
+                        textMuted: "#94a3b8"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bgDark text-white min-h-screen flex items-center justify-center px-4 py-10">
+
+    <main class="w-full max-w-2xl bg-cardDark border border-borderDark rounded-xl p-6">
+
+        <h1 class="text-xl font-semibold mb-4">
+            Edit post
+        </h1>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- Body -->
+            <div>
+                <label class="text-sm text-textMuted block mb-1">
+                    Post text
+                </label>
+                {{ form.body }}
+            </div>
+
+            <!-- Code -->
+            <div>
+                <label class="text-sm text-textMuted block mb-1">
+                    Code (optional)
+                </label>
+                {{ form.code }}
+            </div>
+
+            <!-- Tags -->
+            <div>
+                <label class="text-sm text-textMuted block mb-1">
+                    Tags
+                </label>
+                {{ form.tags }}
+            </div>
+
+            <!-- Current image -->
+            {% if post.image %}
+                <div class="border border-borderDark rounded-md p-3">
+                    <p class="text-sm text-textMuted mb-2">
+                        Current image:
+                    </p>
+                    <img
+                        src="{{ post.image.url }}"
+                        class="rounded-md max-h-60 object-cover"
+                    >
+                </div>
+            {% endif %}
+
+            <!-- Image -->
+            <div>
+                <label class="text-sm text-textMuted block mb-1">
+                    Change image
+                </label>
+                {{ form.image }}
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3 pt-2">
+                <button
+                    type="submit"
+                    class="px-6 py-2 rounded-md
+                           bg-primary text-white font-medium
+                           hover:bg-blue-700 transition"
+                >
+                    Save changes
+                </button>
+
+                <a
+                    href="{{ request.META.HTTP_REFERER|default:'/' }}"
+                    class="px-6 py-2 rounded-md
+                           border border-borderDark text-textMuted
+                           hover:bg-gray-800 transition"
+                >
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </main>
+
+</body>
+</html>

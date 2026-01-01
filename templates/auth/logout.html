@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodyLife | Logout</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: "#0f172a",
+                        cardDark: "#020617",
+                        borderDark: "#1e293b",
+                        textMuted: "#94a3b8",
+                        danger: "#dc2626"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bgDark text-white min-h-screen flex items-center justify-center px-4">
+
+    <main class="w-full max-w-md bg-cardDark rounded-xl shadow-xl p-8 text-center">
+
+        <h1 class="text-2xl font-semibold mb-2">
+            Log out
+        </h1>
+        <p class="text-sm text-textMuted mb-6">
+            Are you sure you want to leave CodyLife?
+        </p>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="w-full py-2.5 rounded-md
+                       bg-danger text-white font-medium
+                       hover:bg-red-700 transition"
+            >
+                Yes, log me out
+            </button>
+
+            <a
+                href="{% url 'user-profile' request.user.username %}"
+                class="block w-full py-2.5 rounded-md
+                       border border-borderDark text-gray-300
+                       hover:bg-gray-800 transition"
+            >
+                Cancel
+            </a>
+        </form>
+
+    </main>
+
+</body>
+</html>

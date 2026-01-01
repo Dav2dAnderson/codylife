@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodyLife | Profile</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    bgDark: "#0f172a",     // slate-900
+                    cardDark: "#020617",  // slate-950
+                    borderDark: "#1e293b",// slate-800
+                    textMuted: "#94a3b8", // slate-400
+                    primary: "#2563eb"    // blue-600 (seryoz)
+                }
+            }
+        }
+    }
+    </script>
+
+</head>
+<body class="bg-bgDark text-white min-h-screen">
+    <!-- Navigation -->
+<nav class="bg-cardDark border-b border-borderDark sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+
+        <!-- Left -->
+        <div class="flex items-center gap-10">
+            <span class="text-lg font-semibold tracking-tight">
+                CodyLife
+            </span>
+
+            <div class="hidden md:flex items-center gap-6 text-sm">
+                <a href="{% url 'homepage' %}" class="text-textMuted hover:text-white">
+                    Home
+                </a>
+                <a href="#" class="text-textMuted hover:text-white">
+                    Explore
+                </a>
+                <a href="#" class="text-textMuted hover:text-white">
+                    Notifications
+                </a>
+            </div>
+        </div>
+
+        <!-- Right -->
+        <div class="flex items-center gap-4">
+
+            <!-- Search -->
+            <div class="hidden md:block">
+                <input
+                    type="text"
+                    placeholder="Search"
+                    class="bg-bgDark border border-borderDark text-sm text-white
+                           rounded-md px-3 py-1.5 w-56
+                           focus:outline-none focus:border-primary"
+                >
+            </div>
+
+            <!-- Profile -->
+            {% if profile_user.picture %}
+                <img
+                    src="{{ profile_user.picture.url }}"
+                    class="w-8 h-8 rounded-full object-cover border border-borderDark"
+                    alt="profile"
+                >
+            {% else %}
+                <div class="w-8 h-8 rounded-full bg-gray-800
+                            flex items-center justify-center text-sm font-medium">
+                    {{ profile_user.username|first|upper }}
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+{% block content %}
+
+{% endblock content %}
+</body>
+</html>

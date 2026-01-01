@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="bg-bgDark min-h-screen">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+
+        <!-- HEADER -->
+        <div class="bg-cardDark border border-borderDark rounded-md p-6 mb-8">
+            <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-5">
+                    {% if profile_user.picture %}
+                        <img src="{{ profile_user.picture.url }}"
+                             class="w-20 h-20 rounded-full object-cover border border-borderDark">
+                    {% else %}
+                        <div class="w-20 h-20 rounded-full bg-gray-800
+                                    flex items-center justify-center text-xl font-medium">
+                            {{ profile_user.username|first|upper }}
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <h1 class="text-xl font-semibold">
+                            {{ profile_user.username }}
+                        </h1>
+                        <p class="text-sm text-textMuted">
+                            Member since {{ profile_user.date_joined|date:"Y" }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    {% if request.user == profile_user %}
+                        <a href="{% url 'user-edit' %}"
+                           class="text-sm px-4 py-2 border border-borderDark
+                                  rounded-md hover:border-primary transition">
+                            Edit profile
+                        </a>
+                    {% else %}
+                        <a href="#"
+                           class="text-sm px-4 py-2 bg-primary rounded-md">
+                            Follow
+                        </a>
+                        <a href="#"
+                           class="text-sm px-4 py-2 border border-borderDark
+                                  rounded-md hover:border-primary transition">
+                            Message
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
+                <p class="text-lg font-semibold">24</p>
+                <p class="text-xs text-textMuted">Posts</p>
+            </div>
+            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
+                <p class="text-lg font-semibold">156</p>
+                <p class="text-xs text-textMuted">Followers</p>
+            </div>
+            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
+                <p class="text-lg font-semibold">89</p>
+                <p class="text-xs text-textMuted">Following</p>
+            </div>
+            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
+                <p class="text-lg font-semibold">342</p>
+                <p class="text-xs text-textMuted">Likes</p>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- LEFT -->
+            <div class="md:col-span-2 space-y-6">
+
+                {% if profile_user.bio %}
+                <div class="bg-cardDark border border-borderDark rounded-md p-6">
+                    <h2 class="text-sm font-medium mb-3">
+                        About
+                    </h2>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        {{ profile_user.bio }}
+                    </p>
+                </div>
+                {% endif %}
+
+                <div class="bg-cardDark border border-borderDark rounded-md p-6">
+                    <h2 class="text-sm font-medium mb-4">
+                        Account information
+                    </h2>
+
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between border-b border-borderDark pb-2">
+                            <span class="text-textMuted">Username</span>
+                            <span>{{ profile_user.username }}</span>
+                        </li>
+                        <li class="flex justify-between border-b border-borderDark pb-2">
+                            <span class="text-textMuted">Email</span>
+                            <span>{{ profile_user.email|default:"—" }}</span>
+                        </li>
+                        <li class="flex justify-between border-b border-borderDark pb-2">
+                            <span class="text-textMuted">Joined</span>
+                            <span>{{ profile_user.date_joined|date:"F Y" }}</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-textMuted">Last active</span>
+                            <span>{{ profile_user.last_login|timesince }} ago</span>
+                        </li>
+                    </ul>
+                </div>
+
+                {% if request.user == profile_user %}
+                <div class="bg-cardDark border border-borderDark rounded-md p-6">
+                    <h2 class="text-sm font-medium mb-4">
+                        Security
+                    </h2>
+
+                    <div class="space-y-3 text-sm">
+                        <a href="#"
+                           class="block px-4 py-2 border border-borderDark rounded-md hover:border-primary">
+                            Change password
+                        </a>
+                        <a href="#"
+                           class="block px-4 py-2 border border-borderDark rounded-md hover:border-primary">
+                            Privacy settings
+                        </a>
+                        <a href="{% url 'user-logout' %}"
+                           class="block px-4 py-2 rounded-md bg-red-600 text-white">
+                            Log out
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- RIGHT -->
+            <aside class="space-y-6">
+
+                <div class="bg-cardDark border border-borderDark rounded-md p-6">
+                    <h2 class="text-sm font-medium mb-4">
+                        Links
+                    </h2>
+
+                    <div class="space-y-3 text-sm">
+                        {% if profile_user.linkedin_link %}
+                        <a href="{{ profile_user.linkedin_link }}" class="block text-textMuted hover:text-white">
+                            linkedin.com/in/username
+                        </a>
+                        {% endif %}
+                        
+                        {% if profile_user.github_link %}
+                        <a href="{{ profile_user.github_link }}" class="block text-textMuted hover:text-white">
+                            GitHub
+                        </a>
+                        {% endif %}
+
+                        {% if profile_user.website %}
+                        <a href="{{ profile_user.website }}" class="block text-textMuted hover:text-white">
+                            Website
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
