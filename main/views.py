@@ -8,7 +8,7 @@ from .forms import PostCreateForm
 # Create your views here.
 
 
-class HomePageView(generic.ListView):
+class HomePageView(LoginRequiredMixin, generic.ListView):
     model = Post
     template_name = 'homepage.html'
     context_object_name = 'posts'
@@ -18,7 +18,7 @@ class HomePageView(generic.ListView):
         context['tags'] = Tags.objects.all()
         return context
 
-class PostCreateView(generic.CreateView ):
+class PostCreateView(LoginRequiredMixin, generic.CreateView ):
     model = Post
     template_name = "post_related/post-create.html"
     form_class = PostCreateForm

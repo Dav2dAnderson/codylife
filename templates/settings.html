@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}CodyLife | Settings{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+    <h1 class="text-2xl font-semibold mb-6">Sozlamalar</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- SIDEBAR -->
+        <aside class="bg-cardDark border border-borderDark rounded-lg p-4 space-y-2">
+
+            <button data-target="account"
+                    class="settings-tab active-tab">
+                Ma'lumotlar
+            </button>
+
+            <button data-target="profile"
+                    class="settings-tab">
+                Hisob
+            </button>
+
+            <button data-target="security"
+                    class="settings-tab">
+                Xavfsizlik
+            </button>
+
+            <button data-target="notifications"
+                    class="settings-tab">
+                Xabarlar
+            </button>
+
+            <button data-target="danger"
+                    class="settings-tab text-red-400 hover:text-red-500">
+                Muhim
+            </button>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <section class="lg:col-span-3 bg-cardDark border border-borderDark rounded-lg p-6">
+
+            <!-- ACCOUNT -->
+            <div id="account" class="settings-section">
+                <h2 class="text-lg font-semibold mb-4">Account</h2>
+
+                <div class="space-y-4 text-sm">
+                    <p><span class="text-textMuted">Foydalanuvchi nomi:</span> {{ request.user.username }}</p>
+                    <p><span class="text-textMuted">Email:</span> {{ request.user.email }}</p>
+                </div>
+            </div>
+
+            <!-- PROFILE -->
+            <div id="profile" class="settings-section hidden">
+                <h2 class="text-lg font-semibold mb-4">Hisob</h2>
+
+                <p class="text-textMuted text-sm mb-4">
+                    Ommaviy ma'lumotlaringizni o'zgartirish uchun
+                </p>
+                {% if request.user == profile_user %}
+                <a href="{% url 'user-edit' %}"
+                   class="inline-block px-4 py-2 rounded-md bg-primary text-white text-sm">
+                    O'zgartirish
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- SECURITY -->
+            <div id="security" class="settings-section hidden">
+                <h2 class="text-lg font-semibold mb-4">Xavfsizlik</h2>
+
+                <p class="text-textMuted text-sm mb-4">
+                    Parolingizni o'zgartirish uchun.
+                </p>
+
+                <a href="{% url 'password-change' %}"
+                   class="inline-block px-4 py-2 rounded-md bg-primary text-white text-sm">
+                    O'zgartirish
+                </a>
+            </div>
+
+            <!-- NOTIFICATIONS -->
+            <div id="notifications" class="settings-section hidden">
+                <h2 class="text-lg font-semibold mb-4">Xabarnomalar</h2>
+
+                <form class="space-y-4 text-sm">
+                    <label class="flex items-center gap-3">
+                        <input type="checkbox" checked class="accent-primary">
+                        Email xabarlar
+                    </label>
+
+                    <label class="flex items-center gap-3">
+                        <input type="checkbox" class="accent-primary">
+                        Push xabarlar
+                        <p class="text-textMuted">(Hali ishga tushmagan!)</p>
+                    </label>
+                </form>
+            </div>
+
+            <!-- DANGER ZONE -->
+            <div id="danger" class="settings-section hidden">
+                <h2 class="text-lg font-semibold text-red-500 mb-4">
+                    Muhim
+                </h2>
+
+                <p class="text-textMuted text-sm mb-4">
+                    Hisobingizni o'chirish (qaytarib bo'lmaydi).
+                </p>
+
+                <a href="#"
+                   class="inline-block px-4 py-2 rounded-md bg-red-600 text-white text-sm hover:bg-red-700">
+                    Hisobni o'chirish
+                </a>
+            </div>
+
+        </section>
+
+    </div>
+</div>
+
+<!-- TAB SWITCH SCRIPT -->
+<script>
+const tabs = document.querySelectorAll(".settings-tab");
+const sections = document.querySelectorAll(".settings-section");
+
+tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+        const target = tab.dataset.target;
+
+        tabs.forEach(t => t.classList.remove("active-tab"));
+        tab.classList.add("active-tab");
+
+        sections.forEach(section => {
+            section.classList.toggle(
+                "hidden",
+                section.id !== target
+            );
+        });
+    });
+});
+</script>
+
+<!-- TAILWIND HELPERS -->
+<style>
+.settings-tab {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    transition: 0.2s;
+}
+.settings-tab:hover {
+    background-color: #0f172a;
+    color: white;
+}
+.active-tab {
+    background-color: #0f172a;
+    color: white;
+}
+</style>
+
+{% endblock %}

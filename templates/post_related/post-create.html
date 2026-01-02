@@ -29,9 +29,9 @@
 
     <!-- Header -->
     <div class="mb-6">
-        <h1 class="text-xl font-semibold">Create new post</h1>
+        <h1 class="text-xl font-semibold">Post yaratish</h1>
         <p class="text-sm text-textMuted mt-1">
-            Share something useful with the CodyLife community
+            CodyLife community bilan muammo yoki g'oyalaringizni ulashing
         </p>
     </div>
 
@@ -42,7 +42,7 @@
         <!-- Body -->
         <div>
             <label class="block text-xs text-textMuted mb-1">
-                Post content
+                Asosiy qismi
             </label>
             {{ form.body }}
             {% if form.body.errors %}
@@ -55,7 +55,7 @@
         <!-- Image -->
         <div>
             <label class="block text-xs text-textMuted mb-2">
-                Image (optional)
+                Rasm (majburiy emas)
             </label>
             {{ form.image }}
             {% if form.image.errors %}
@@ -68,7 +68,7 @@
         <!-- Code -->
         <div>
             <label class="block text-xs text-textMuted mb-1">
-                Code (optional)
+                Kod (majburiy emas)
             </label>
             {{ form.code }}
         </div>
@@ -76,12 +76,9 @@
         <!-- Tags -->
         <div>
             <label class="block text-xs text-textMuted mb-1">
-                Tags
+                Taglar
             </label>
             {{ form.tags }}
-            <p class="text-xs text-textMuted mt-1">
-                Separate tags with commas
-            </p>
         </div>
 
         <!-- Actions -->
@@ -92,7 +89,7 @@
                        border border-borderDark text-textMuted
                        hover:bg-gray-800 transition"
             >
-                Cancel
+                Bekor qilish
             </a>
 
             <button
@@ -101,7 +98,7 @@
                        bg-primary text-white font-medium
                        hover:bg-blue-700 transition"
             >
-                Publish
+                Yaratish
             </button>
         </div>
 

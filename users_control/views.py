@@ -3,6 +3,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import generic
 from django.contrib import messages
@@ -93,7 +94,7 @@ class UserLogOut(View):
         return redirect('user-login')
     
 
-class UserProfileView(generic.DetailView):
+class UserProfileView(LoginRequiredMixin, generic.DetailView):
     model = CustomUser
     template_name = 'user-profile.html'
     slug_field = 'username'
@@ -106,7 +107,7 @@ class UserProfileView(generic.DetailView):
         return context
     
 
-class UserProfileEdit(generic.UpdateView):
+class UserProfileEdit(LoginRequiredMixin, generic.UpdateView):
     model = CustomUser
     form_class = EditProfileForm
     template_name = 'edit-profile.html'
@@ -116,3 +117,9 @@ class UserProfileEdit(generic.UpdateView):
     
     def get_success_url(self):
         return reverse_lazy('user-profile', kwargs={"username": self.request.user.username})
+
+
+class SettingsView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'settings.html'
+
+    

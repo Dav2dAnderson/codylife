@@ -5,9 +5,9 @@
 
     <!-- Page title -->
     <div class="mb-8">
-        <h1 class="text-2xl font-semibold">Edit profile</h1>
+        <h1 class="text-2xl font-semibold">Hisobni tahrirlash</h1>
         <p class="text-sm text-textMuted mt-1">
-            Update your personal information and profile settings
+            Shaxsiy ma'lumotlaringizni o'zgartirish uchun
         </p>
     </div>
 
@@ -16,7 +16,7 @@
 
         <!-- Profile Picture -->
         <div class="bg-cardDark border border-borderDark rounded-md p-6">
-            <h2 class="text-sm font-medium mb-4">Profile photo</h2>
+            <h2 class="text-sm font-medium mb-4">Rasmingiz</h2>
 
             <div class="flex items-center gap-6">
                 {% if profile_user.picture %}
@@ -35,7 +35,7 @@
                 <div>
                     {{ form.picture }}
                     <p class="text-xs text-textMuted mt-1">
-                        JPG or PNG. Max size 2MB.
+                        JPG yoki PNG. Maksimum hajm 2MB.
                     </p>
                 </div>
             </div>
@@ -43,11 +43,11 @@
 
         <!-- Basic info -->
         <div class="bg-cardDark border border-borderDark rounded-md p-6 space-y-5">
-            <h2 class="text-sm font-medium">Basic information</h2>
+            <h2 class="text-sm font-medium">Ma'lumotlar</h2>
 
             <!-- Username -->
             <div>
-                <label class="block text-xs text-textMuted mb-1">Username</label>
+                <label class="block text-xs text-textMuted mb-1">Foydalanuvchi nomi</label>
                 {{ form.username }}
             </div>
 
@@ -59,7 +59,7 @@
 
             <!-- Bio -->
             <div>
-                <label class="block text-xs text-textMuted mb-1">Bio</label>
+                <label class="block text-xs text-textMuted mb-1">O'zingiz haqingizda</label>
                 {{ form.bio }}
             </div>
         </div>

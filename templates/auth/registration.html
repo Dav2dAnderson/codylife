@@ -27,7 +27,7 @@
     <div class="w-full max-w-sm bg-cardDark border border-borderDark rounded-md p-6">
 
         <h1 class="text-lg font-semibold text-center mb-6 tracking-tight">
-            Create account
+            Hisob ochish
         </h1>
 
         <form method="POST" class="space-y-4">
@@ -36,7 +36,7 @@
             <!-- Username -->
             <div>
                 <label class="block text-xs text-textMuted mb-1">
-                    Username
+                    Foydalanuvchi nomi
                 </label>
                 {{ form.username }}
                 {% for error in form.username.errors %}
@@ -58,7 +58,7 @@
             <!-- Password -->
             <div>
                 <label class="block text-xs text-textMuted mb-1">
-                    Password
+                    Parol
                 </label>
                 {{ form.password1 }}
                 {% for error in form.password1.errors %}
@@ -69,7 +69,7 @@
             <!-- Confirm Password -->
             <div>
                 <label class="block text-xs text-textMuted mb-1">
-                    Confirm password
+                    Parolni tasdiqlash
                 </label>
                 {{ form.password2 }}
                 {% for error in form.password2.errors %}
@@ -87,14 +87,14 @@
                 type="submit"
                 class="w-full bg-primary py-2 rounded-md
                        text-sm font-medium hover:bg-blue-500 transition">
-                Create account
+                Hisob ochish
             </button>
         </form>
 
         <p class="text-xs text-center text-textMuted mt-4">
-            Already have an account?
+            Hisobingiz allaqachon mavjudmi?
             <a href="{% url 'user-login' %}" class="text-primary hover:underline">
-                Log in
+                Tizimga kirish
             </a>
         </p>
 

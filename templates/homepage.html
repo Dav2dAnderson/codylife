@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3 text-center text-xs border-t border-borderDark pt-3">
+                <!-- <div class="grid grid-cols-3 text-center text-xs border-t border-borderDark pt-3">
                     <div>
                         <p class="font-medium">42</p>
                         <p class="text-textMuted">Posts</p>
@@ -43,21 +43,21 @@
                         <p class="font-medium">328</p>
                         <p class="text-textMuted">Following</p>
                     </div>
-                </div>
+                </div> -->
 
                 <a href="{% url 'user-profile' request.user.username %}"
                    class="block text-center mt-4 text-sm
                           border border-borderDark rounded-md py-1.5
                           hover:border-primary transition">
-                    View profile
+                    Hisobga o'tish
                 </a>
             </div>
 
             <!-- Links -->
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-sm space-y-3">
-                <a href="#" class="block text-textMuted hover:text-white">Saved posts</a>
-                <a href="#" class="block text-textMuted hover:text-white">My network</a>
-                <a href="#" class="block text-textMuted hover:text-white">Settings</a>
+                <a href="#" class="block text-textMuted hover:text-white">Saqlanganlar</a>
+                <!-- <a href="#" class="block text-textMuted hover:text-white">My network</a> -->
+                <a href="{% url 'settings' %}" class="block text-textMuted hover:text-white">Sozlamalar</a>
             </div>
 
         </aside>
@@ -70,10 +70,10 @@
 
             <!-- Filters -->
             <div class="flex gap-6">
-                <button class="text-white font-medium">All</button>
-                <button class="text-textMuted hover:text-white">Following</button>
+                <button class="text-white font-medium">Barchasi</button>
+                <!-- <button class="text-textMuted hover:text-white">Following</button>
                 <button class="text-textMuted hover:text-white">Trending</button>
-                <button class="text-textMuted hover:text-white">Latest</button>
+                <button class="text-textMuted hover:text-white">Latest</button> -->
             </div>
 
             <!-- New Post Button -->
@@ -83,7 +83,7 @@
                     hover:bg-blue-700 transition font-medium">
 
                 <span class="text-lg leading-none">+</span>
-                <span>New post</span>
+                <span>Post qo'shish</span>
             </a>
         </div>
 
@@ -128,7 +128,7 @@
                             href="{% url 'post-edit' post.slug %}"
                             class="block px-4 py-2 text-sm text-textMuted hover:bg-gray-800 hover:text-white"
                         >
-                            Edit post
+                            Tahrirlash
                         </a>
 
                         <form method="POST" action="{% url 'post-delete' post.slug %}">
@@ -137,17 +137,17 @@
                                 type="submit"
                                 class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800"
                             >
-                                Delete post
+                                O'chirish
                             </button>
                         </form>
                         {% endif %}
                         <button class="w-full text-left px-4 py-2 text-sm text-textMuted hover:bg-gray-800">
-                            <a href="{% url 'post-detail' post.slug %}">See in details</a>                        </button>
+                            <a href="{% url 'post-detail' post.slug %}">Batafsil</a>                        </button>
                         <button
                             onclick="copyPostLink('{{ request.build_absolute_uri|escapejs }}')"
                             class="w-full text-left px-4 py-2 text-sm text-textMuted hover:bg-gray-800"
                         >
-                            Copy link
+                            Nusxalash
                         </button>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
             <!-- Load more -->
             <div class="text-center">
                 <button class="text-sm text-textMuted hover:text-white">
-                    Load more
+                    Ko'proq
                 </button>
             </div>
 

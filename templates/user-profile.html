@@ -24,7 +24,7 @@
                             {{ profile_user.username }}
                         </h1>
                         <p class="text-sm text-textMuted">
-                            Member since {{ profile_user.date_joined|date:"Y" }}
+                            {{ profile_user.date_joined|date:"Y" }} - yildan bera a'zo
                         </p>
                     </div>
                 </div>
@@ -35,17 +35,17 @@
                         <a href="{% url 'user-edit' %}"
                            class="text-sm px-4 py-2 border border-borderDark
                                   rounded-md hover:border-primary transition">
-                            Edit profile
+                            Hisobni tahrirlash
                         </a>
                     {% else %}
                         <a href="#"
                            class="text-sm px-4 py-2 bg-primary rounded-md">
-                            Follow
+                            Obuna bo'lish
                         </a>
                         <a href="#"
                            class="text-sm px-4 py-2 border border-borderDark
                                   rounded-md hover:border-primary transition">
-                            Message
+                            Xabar yozish
                         </a>
                     {% endif %}
                 </div>
@@ -54,22 +54,14 @@
         </div>
 
         <!-- STATS -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-8">
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
                 <p class="text-lg font-semibold">24</p>
                 <p class="text-xs text-textMuted">Posts</p>
             </div>
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
-                <p class="text-lg font-semibold">156</p>
-                <p class="text-xs text-textMuted">Followers</p>
-            </div>
-            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
-                <p class="text-lg font-semibold">89</p>
-                <p class="text-xs text-textMuted">Following</p>
-            </div>
-            <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
-                <p class="text-lg font-semibold">342</p>
-                <p class="text-xs text-textMuted">Likes</p>
+                <p class="text-lg font-semibold">32</p>
+                <p class="text-xs text-textMuted">Javoblar</p>
             </div>
         </div>
 
@@ -82,7 +74,7 @@
                 {% if profile_user.bio %}
                 <div class="bg-cardDark border border-borderDark rounded-md p-6">
                     <h2 class="text-sm font-medium mb-3">
-                        About
+                        Foydalanuvchi haqida
                     </h2>
                     <p class="text-sm text-gray-300 leading-relaxed">
                         {{ profile_user.bio }}
@@ -92,12 +84,12 @@
 
                 <div class="bg-cardDark border border-borderDark rounded-md p-6">
                     <h2 class="text-sm font-medium mb-4">
-                        Account information
+                        Hisob ma'lumotlari
                     </h2>
 
                     <ul class="space-y-3 text-sm">
                         <li class="flex justify-between border-b border-borderDark pb-2">
-                            <span class="text-textMuted">Username</span>
+                            <span class="text-textMuted">Foydalanuvchi nomi</span>
                             <span>{{ profile_user.username }}</span>
                         </li>
                         <li class="flex justify-between border-b border-borderDark pb-2">
@@ -105,12 +97,12 @@
                             <span>{{ profile_user.email|default:"—" }}</span>
                         </li>
                         <li class="flex justify-between border-b border-borderDark pb-2">
-                            <span class="text-textMuted">Joined</span>
+                            <span class="text-textMuted">Qo'shilgan</span>
                             <span>{{ profile_user.date_joined|date:"F Y" }}</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-textMuted">Last active</span>
-                            <span>{{ profile_user.last_login|timesince }} ago</span>
+                            <span class="text-textMuted">Ohirgi kirish</span>
+                            <span>{{ profile_user.last_login|timesince }} oldin</span>
                         </li>
                     </ul>
                 </div>
@@ -118,21 +110,21 @@
                 {% if request.user == profile_user %}
                 <div class="bg-cardDark border border-borderDark rounded-md p-6">
                     <h2 class="text-sm font-medium mb-4">
-                        Security
+                        Xavfsizlik
                     </h2>
 
                     <div class="space-y-3 text-sm">
-                        <a href="#"
+                        <a href="{% url 'password-change' %}"
                            class="block px-4 py-2 border border-borderDark rounded-md hover:border-primary">
-                            Change password
+                            Parolni o'zgartirish
                         </a>
-                        <a href="#"
+                        <a href="{% url 'settings' %}"
                            class="block px-4 py-2 border border-borderDark rounded-md hover:border-primary">
-                            Privacy settings
+                            Sozlamalarga o'tish
                         </a>
                         <a href="{% url 'user-logout' %}"
                            class="block px-4 py-2 rounded-md bg-red-600 text-white">
-                            Log out
+                            Tizimdan chiqish
                         </a>
                     </div>
                 </div>
@@ -144,7 +136,7 @@
 
                 <div class="bg-cardDark border border-borderDark rounded-md p-6">
                     <h2 class="text-sm font-medium mb-4">
-                        Links
+                        Xavolalar
                     </h2>
 
                     <div class="space-y-3 text-sm">
