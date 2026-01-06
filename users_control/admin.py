@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser, Technologies
+from .models import CustomUser, Technologies, EmailVerification
 # Register your models here.
 
 
@@ -12,3 +12,8 @@ class CustomUserAdmin(admin.ModelAdmin):
 @admin.register(Technologies)
 class TechnologiesAdmin(admin.ModelAdmin):
     list_display = ['name', ]
+
+
+@admin.register(EmailVerification)
+class EmeilVerifiesAdmin(admin.ModelAdmin):
+    list_display = ['user', 'code', 'created_at']

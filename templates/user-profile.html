@@ -56,12 +56,12 @@
         <!-- STATS -->
         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-8">
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
-                <p class="text-lg font-semibold">24</p>
-                <p class="text-xs text-textMuted">Posts</p>
+                <p class="text-lg font-semibold">{{ profile_user.posts.count }}</p>
+                <p class="text-xs text-textMuted">Postlar</p>
             </div>
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-center">
-                <p class="text-lg font-semibold">32</p>
-                <p class="text-xs text-textMuted">Javoblar</p>
+                <p class="text-lg font-semibold">{{ profile_user.articles.count }}</p>
+                <p class="text-xs text-textMuted">Maqolalar</p>
             </div>
         </div>
 

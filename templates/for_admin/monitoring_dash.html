@@ -1,0 +1,11 @@
+<div class="bg-cardDark p-6 rounded-lg shadow text-white">
+    <h2 class="text-lg font-bold mb-2">Monitoring</h2>
+    <p>Total users: {{ total_users }}</p>
+    <p>Online now:
+        {% for user in online_users_count %}
+            {{ user.username }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Hozir hechkim yo'q
+        {% endfor %}
+    </p>
+</div>

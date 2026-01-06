@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+    /* Webkit brauzerlar (Chrome, Edge, Safari) */
+.scroll-panel::-webkit-scrollbar {
+    width: 6px;             /* Scroll bar qalinligi */
+}
+
+.scroll-panel::-webkit-scrollbar-track {
+    background: #1f2937;    /* Track rangi */
+    border-radius: 3px;     
+}
+
+.scroll-panel::-webkit-scrollbar-thumb {
+    background-color: #3b82f6; /* Thumb rangi (primary rang) */
+    border-radius: 3px;
+}
+
+/* Firefox uchun */
+.scroll-panel {
+    scrollbar-width: thin;               /* Qalinlik */
+    scrollbar-color: #3b82f6 #1f2937;   /* Thumb va track rangi */
+}
+
+</style>
 <div class="bg-bgDark min-h-screen">
     <div class="max-w-7xl mx-auto px-6 py-6 grid grid-cols-12 gap-6">
 
@@ -30,21 +53,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="grid grid-cols-3 text-center text-xs border-t border-borderDark pt-3">
-                    <div>
-                        <p class="font-medium">42</p>
-                        <p class="text-textMuted">Posts</p>
-                    </div>
-                    <div>
-                        <p class="font-medium">1.2k</p>
-                        <p class="text-textMuted">Followers</p>
-                    </div>
-                    <div>
-                        <p class="font-medium">328</p>
-                        <p class="text-textMuted">Following</p>
-                    </div>
-                </div> -->
-
                 <a href="{% url 'user-profile' request.user.username %}"
                    class="block text-center mt-4 text-sm
                           border border-borderDark rounded-md py-1.5
@@ -56,36 +64,32 @@
             <!-- Links -->
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-sm space-y-3">
                 <a href="#" class="block text-textMuted hover:text-white">Saqlanganlar</a>
-                <!-- <a href="#" class="block text-textMuted hover:text-white">My network</a> -->
                 <a href="{% url 'settings' %}" class="block text-textMuted hover:text-white">Sozlamalar</a>
             </div>
 
         </aside>
 
-        <!-- MAIN FEED -->
-        <main class="col-span-12 lg:col-span-6 space-y-6">
-        <!-- Filters + New Post -->
-        <div class="bg-cardDark border border-borderDark rounded-md px-4 py-2
-                    flex items-center justify-between gap-4 text-sm">
+        <!-- MAIN FEED (Scrollable, paginationsiz) -->
+        <main class="scroll-panel col-span-12 lg:col-span-6 space-y-4 max-h-[80vh] overflow-y-auto">
+            <!-- Filters + New Post (sticky) -->
+            <div class="bg-cardDark border border-borderDark rounded-md px-4 py-2
+                        flex items-center justify-between gap-4 text-sm sticky top-0 z-10">
 
-            <!-- Filters -->
-            <div class="flex gap-6">
-                <button class="text-white font-medium">Barchasi</button>
-                <!-- <button class="text-textMuted hover:text-white">Following</button>
-                <button class="text-textMuted hover:text-white">Trending</button>
-                <button class="text-textMuted hover:text-white">Latest</button> -->
+                <!-- Filters -->
+                <div class="flex gap-6">
+                    <button class="text-white font-medium">Barchasi</button>
+                </div>
+
+                <!-- New Post Button -->
+                <a href="{% url 'post-create' %}"
+                   class="flex items-center gap-2 px-4 py-1.5
+                          bg-primary text-white rounded-md
+                          hover:bg-blue-700 transition font-medium">
+                    <span class="text-lg leading-none">+</span>
+                    <span>Post qo'shish</span>
+                </a>
             </div>
 
-            <!-- New Post Button -->
-            <a href="{% url 'post-create' %}"
-            class="flex items-center gap-2 px-4 py-1.5
-                    bg-primary text-white rounded-md
-                    hover:bg-blue-700 transition font-medium">
-
-                <span class="text-lg leading-none">+</span>
-                <span>Post qo'shish</span>
-            </a>
-        </div>
 
             <!-- POSTS -->
             {% for post in posts %}
@@ -109,48 +113,38 @@
                     </div>
 
                     <div class="relative">
-                    <!-- Three dots button -->
-                    <button
-                        type="button"
-                        class="text-textMuted hover:text-white text-lg px-2"
-                        onclick="togglePostMenu(this)"
-                    >
-                        ⋯
-                    </button>
-
-                    <!-- Dropdown -->
-                    <div
-                        class="hidden absolute right-0 mt-2 w-40
-                            bg-cardDark border border-borderDark rounded-md shadow-lg z-50"
-                    >
-                        {% if request.user == post.author %}
-                        <a
-                            href="{% url 'post-edit' post.slug %}"
-                            class="block px-4 py-2 text-sm text-textMuted hover:bg-gray-800 hover:text-white"
-                        >
-                            Tahrirlash
-                        </a>
-
-                        <form method="POST" action="{% url 'post-delete' post.slug %}">
-                            {% csrf_token %}
-                            <button
-                                type="submit"
-                                class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800"
-                            >
-                                O'chirish
-                            </button>
-                        </form>
-                        {% endif %}
-                        <button class="w-full text-left px-4 py-2 text-sm text-textMuted hover:bg-gray-800">
-                            <a href="{% url 'post-detail' post.slug %}">Batafsil</a>                        </button>
+                        <!-- Three dots button -->
                         <button
-                            onclick="copyPostLink('{{ request.build_absolute_uri|escapejs }}')"
-                            class="w-full text-left px-4 py-2 text-sm text-textMuted hover:bg-gray-800"
+                            type="button"
+                            class="text-textMuted hover:text-white text-lg px-2"
+                            onclick="togglePostMenu(this)"
                         >
-                            Nusxalash
+                            ⋯
                         </button>
+
+                        <!-- Dropdown -->
+                        <div class="hidden absolute right-0 mt-2 w-40
+                                    bg-cardDark border border-borderDark rounded-md shadow-lg z-50">
+                            {% if request.user == post.author %}
+                            <a href="{% url 'post-edit' post.slug %}"
+                               class="block px-4 py-2 text-sm text-textMuted hover:bg-gray-800 hover:text-white">
+                               Tahrirlash
+                            </a>
+
+                            <form method="POST" action="{% url 'post-delete' post.slug %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800">
+                                    O'chirish
+                                </button>
+                            </form>
+                            {% endif %}
+                            <a href="{% url 'post-detail' post.slug %}"
+                               class="block px-4 py-2 text-sm text-textMuted hover:bg-gray-800">
+                               Batafsil
+                            </a>
+                        </div>
                     </div>
-                </div>
                 </div>
 
                 <!-- Content -->
@@ -179,13 +173,6 @@
             </article>
             {% endfor %}
 
-            <!-- Load more -->
-            <div class="text-center">
-                <button class="text-sm text-textMuted hover:text-white">
-                    Ko'proq
-                </button>
-            </div>
-
         </main>
 
         <!-- RIGHT SIDEBAR -->
@@ -211,31 +198,22 @@
 
 <script>
 function togglePostMenu(btn) {
-    // Close other open menus
-    document.querySelectorAll('.post-menu').forEach(menu => {
+    document.querySelectorAll('.relative > div').forEach(menu => {
         if (menu !== btn.nextElementSibling) {
             menu.classList.add('hidden')
         }
-    })
-
-    const menu = btn.nextElementSibling
-    menu.classList.toggle('hidden')
+    });
+    btn.nextElementSibling.classList.toggle('hidden')
 }
 
 // Close on outside click
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
     if (!e.target.closest('.relative')) {
-        document.querySelectorAll('.relative > div:not(.hidden)').forEach(menu => {
+        document.querySelectorAll('.relative > div').forEach(menu => {
             menu.classList.add('hidden')
-        })
+        });
     }
-})
-
-function copyPostLink(url) {
-    navigator.clipboard.writeText(url)
-    alert("Post link copied!")
-}
+});
 </script>
-
 
 {% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}CodyLife | Xabarnomalar{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-8 space-y-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <h1 class="text-xl font-semibold">
+            Xabarnomalar
+        </h1>
+    </div>
+
+    <!-- Notifications list -->
+    <div class="bg-cardDark border border-borderDark rounded-lg divide-y divide-borderDark">
+
+        {% for notification in notifications %}
+        <!-- Notification item (unread) -->
+        <a href="#"
+           class="flex gap-4 px-5 py-4 hover:bg-gray-900 transition">
+            <div class="flex-1">
+                <p class="text-sm">
+                    <span class="font-medium">{{ notification.author }}</span>
+                        {{ notification.body }}
+                </p>
+                <p class="text-xs text-textMuted mt-1">
+                    {{ notification.created_date|timesince }}
+                </p>
+            </div>
+            
+            {% if not notification.is_read %}
+            <span class="w-2 h-2 rounded-full bg-primary mt-2"></span>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Empty state -->
+    <!--
+    <div class="text-center text-sm text-textMuted py-10">
+        Sizda hozircha xabarnomalar yo‘q
+    </div>
+    -->
+
+</div>
+{% endblock %}

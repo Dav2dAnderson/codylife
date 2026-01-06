@@ -11,8 +11,9 @@ from django.db import IntegrityError
 from django import forms
 from django.urls import reverse_lazy
 
-from .models import CustomUser
+from .models import CustomUser, EmailVerification
 from .forms import CustomUserCreationForm, EditProfileForm
+from .utils import send_verification_email
 # Create your views here.
 
 
@@ -25,12 +26,17 @@ class UserRegistrationView(View):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, f"Welcome to CodeLify, {user.username}!")
-            return redirect('homepage')
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            
+            verification = EmailVerification.objects.create(user=user)
+            send_verification_email(user, verification.code)
+   
+            messages.success(request, "Email manzilingizga tasdiqlash havolasi yuborildi.")
+            return redirect('user-login')
         else:
-            messages.error(request, "Please correct the errors below.")
+            messages.error(request, "Xatolik mavjud.")
 
         return render(request, 'auth/registration.html', {'form': form})    
         # username = self.request.POST.get('username')
@@ -68,6 +74,20 @@ class UserRegistrationView(View):
         #     return render(request, 'auth/registration.html')
         
 
+class EmailVerifyView(View):
+    def get(self, request, code):
+        verification = EmailVerification.objects.get(code=code)
+        user = verification.user
+        user.is_active = True
+        user.save()
+
+        verification.delete()
+        login(request, user)
+
+        messages.success(request, "Email tasdiqlandi.")
+        return redirect('homepage')
+
+
 # @method_decorator(csrf_protect, name='dispatch')
 class UserLoginView(View):
     def get(self, request):
@@ -80,9 +100,18 @@ class UserLoginView(View):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            request.session.cycle_key()
-            return redirect('user-profile', user.username)
+            if not user.is_active:
+                return render(request, 'auth/login.html', {"error": "Email tasdiqlanmagan."})
+            else:
+                login(request, user)
+                request.session.cycle_key()
+                return redirect('user-profile', user.username)
+        else:
+            context = {
+                "error": "Username yoki parol noto'g'ri",
+                'username': username
+            }
+            return render(request, 'auth/login.html', context)
         
 
 class UserLogOut(View):

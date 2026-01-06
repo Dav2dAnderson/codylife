@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-#c5cn464u6p2l)n_gb097g*p!#^+qm%q120t_u*_#_z1g!nmf1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = ["https://c1e00af71259.ngrok-free.app"]
 
 
 # Application definition
@@ -132,3 +134,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_REDIRECT_URL = 'homepage'
 LOGIN_URL = 'user-login'
 LOGOUT_REDIRECT_URL = 'user-login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'dav2danderson@gmail.com'
+EMAIL_HOST_PASSWORD = 'mksv sfmv thui mhah'
+DEFAULT_FROM_EMAIL = 'dav2danderson@gmail.com'

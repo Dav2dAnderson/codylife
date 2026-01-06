@@ -1,8 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
 from django.utils.safestring import mark_safe
+
+import uuid
 # Create your models here.
+
+
+class EmailVerification(models.Model):
+    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
+    code = models.UUIDField(default=uuid.uuid4)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email
 
 
 class CustomUser(AbstractUser):
@@ -13,6 +23,7 @@ class CustomUser(AbstractUser):
     github_link = models.URLField(null=True, blank=True)
     linkedin_link = models.URLField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
+    is_active = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.username

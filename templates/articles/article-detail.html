@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto px-6 py-10 space-y-10">
+
+    <!-- Article Header -->
+    <header class="space-y-4">
+        <h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+            {{ article.title }}
+        </h1>
+
+        <div class="flex items-center gap-4 text-sm text-textMuted">
+            <div class="flex items-center gap-2">
+                {% if article.author.picture %}
+                    <img src="{{ article.author.picture.url }}"
+                         class="w-8 h-8 rounded-full object-cover border border-borderDark">
+                {% else %}
+                    <div class="w-8 h-8 rounded-full bg-gray-800
+                                flex items-center justify-center text-xs font-medium">
+                        {{ article.author.username|first|upper }}
+                    </div>
+                {% endif %}
+                <span class="text-white font-medium">
+                    {{ article.author.username }}
+                </span>
+            </div>
+
+            <span>•</span>
+            <span>{{ article.created_date|date:"M d, Y" }}</span>
+            <span>•</span>
+            <span>{{ article.created_date|timesince }}</span>
+        </div>
+    </header>
+<!-- https://picsum.photos/1200/500 -->
+    <!-- Cover Image
+    <div class="rounded-xl overflow-hidden border border-borderDark">
+        <img
+            src="/media/image.png/"
+            alt="article cover"
+            class="w-full object-cover"
+        >
+    </div> -->
+
+    <!-- Article Body -->
+    <article class="space-y-6 text-[15px] leading-relaxed text-gray-200">
+
+        <p>
+            {{ article.body }}
+        </p>
+        {% if article.code %}
+        <!-- Code Block -->
+        <pre class="bg-cardDark border border-borderDark rounded-lg p-4 text-sm overflow-x-auto">
+<code>
+{{ article.code }}
+</code>
+        </pre>
+        {% endif %}
+
+    </article>
+
+    <!-- Footer -->
+    <div class="flex justify-between items-center pt-6 border-t border-borderDark text-sm">
+        <a href="{% url 'articles' %}" class="text-textMuted hover:text-white">
+            ← Back to articles
+        </a>
+
+        <div class="flex items-center gap-4">
+            <button class="text-textMuted hover:text-white" onclick="copyPostLink('{{ request.build_absolute_uri|escapejs }}')">
+                Share
+            </button>
+        </div>
+    </div>
+
+</div>
+<script>
+    function copyPostLink(url) {
+    navigator.clipboard.writeText(url)
+    alert("Post link copied!")
+}
+</script>
+{% endblock %}

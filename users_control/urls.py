@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from .forms import CustomPasswordChangeForm
-from .views import UserLoginView, UserLogOut, UserProfileView, UserRegistrationView, UserProfileEdit, SettingsView
+from .views import UserLoginView, UserLogOut, UserProfileView, UserRegistrationView, UserProfileEdit, SettingsView, EmailVerifyView
 
 
 urlpatterns = [
@@ -24,4 +24,6 @@ urlpatterns = [
         template_name='settings/password_change_done.html'
     ),
     name='password-change-done'),
+
+    path('verify/<uuid:code>/', EmailVerifyView.as_view(), name='email-verify'),
 ]
