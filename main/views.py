@@ -91,7 +91,7 @@ class PostDetailView(generic.DetailView):
         return redirect('post-detail', slug=self.object.slug)
     
 
-class NotificationsPageView(generic.ListView):
+class NotificationsPageView(LoginRequiredMixin, generic.ListView):
     template_name = 'notifications.html'
     model = Notification
     context_object_name = 'notifications'

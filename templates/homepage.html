@@ -63,7 +63,7 @@
 
             <!-- Links -->
             <div class="bg-cardDark border border-borderDark rounded-md p-4 text-sm space-y-3">
-                <a href="#" class="block text-textMuted hover:text-white">Saqlanganlar</a>
+                <!-- <a href="#" class="block text-textMuted hover:text-white">Saqlanganlar</a> -->
                 <a href="{% url 'settings' %}" class="block text-textMuted hover:text-white">Sozlamalar</a>
             </div>
 
@@ -179,13 +179,13 @@
         <aside class="col-span-3 hidden lg:block space-y-6">
 
             <div class="bg-cardDark border border-borderDark rounded-md p-4">
-                <h3 class="text-sm font-medium mb-4">Trending</h3>
+                <h3 class="text-sm font-medium mb-4">Hozirgi teglar</h3>
 
                 <div class="space-y-3 text-sm">
                     {% for tag in tags %}
                     <div>
                         <p class="font-medium text-primary">#{{ tag.name }}</p>
-                        <p class="text-xs text-textMuted">1.2k posts</p>
+                        <!-- <p class="text-xs text-textMuted">1.2k posts</p> -->
                     </div>
                     {% endfor %}
                 </div>
