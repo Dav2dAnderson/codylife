@@ -33,11 +33,10 @@ if os.path.exists(env_file):
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ["codylife.uz", "www.codylife.uz"]
 
-ALLOWED_HOSTS = ["*"]
-
-CSRF_TRUSTED_ORIGINS = ["https://c1e00af71259.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = ["https://codylife.uz"]
 
 
 # Application definition
