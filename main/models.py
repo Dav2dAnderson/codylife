@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.text import slugify
 
@@ -9,7 +11,7 @@ class Post(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     body = models.TextField()
-    slug = models.SlugField(null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
     code = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField('Tags', blank=True)
     created_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -17,10 +19,11 @@ class Post(models.Model):
     def __str__(self):
         return self.body
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.body)
-        return super().save()
+            base_slug = slugify(self.body)[:200]
+            self.slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Post'
@@ -77,7 +80,7 @@ class Notification(models.Model):
 class Articles(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='articles')
     title = models.CharField(max_length=200)
-    slug = models.SlugField(null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
     body = models.TextField()
     code = models.TextField(null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -87,7 +90,8 @@ class Articles(models.Model):
     
     def save(self):
         if not self.slug:
-            self.slug = slugify(self.title)
+            base_slug = slugify(self.title)[:200]
+            self.slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
         return super().save()
     
     class Meta:

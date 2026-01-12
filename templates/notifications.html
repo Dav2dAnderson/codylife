@@ -13,8 +13,8 @@
     </div>
 
     <!-- Notifications list -->
+    {% if notifications %}
     <div class="bg-cardDark border border-borderDark rounded-lg divide-y divide-borderDark">
-
         {% for notification in notifications %}
         <!-- Notification item (unread) -->
         <a href="#"
@@ -35,6 +35,9 @@
         </a>
         {% endfor %}
     </div>
+    {% else %}
+    <p class="text-textMuted">Sizda hozircha xabar yo'q.</p>
+    {% endif %}
 
     <!-- Empty state -->
     <!--

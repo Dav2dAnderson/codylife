@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     github_link = models.URLField(null=True, blank=True)
     linkedin_link = models.URLField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
-    is_active = models.BooleanField(default=False, null=True, blank=True)
+    is_vip = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.username
